@@ -45,4 +45,8 @@ abstract class Sql {
     public function setWhere(Where $where) {
         $this->where = $where;
     }
+
+    public function getWhere() {
+        return $this->where;
+    }
 }
