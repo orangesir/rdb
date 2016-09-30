@@ -11,6 +11,7 @@ class Where {
         if($value) {
             $this->binds[] = $value;
         }
+        return $this;
     }
 
     public function binds() {
@@ -18,7 +19,7 @@ class Where {
     }
 
     public function whereStr() {
-        return implode(" AND ", $this->whereStrs);
+        return $this->whereStrs ? " where ".implode(" AND ", $this->whereStrs):"";
     }
 
 }

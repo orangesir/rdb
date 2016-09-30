@@ -5,9 +5,24 @@ abstract class Sql {
 
     protected $where;
     protected $sqlString = "";
-    protected $bindValues = array();
+    protected $bindValues;
     protected $tableName;
     protected $isBuild = true;
+
+    /**
+     * make sqlString and append bindValues
+     */
+    abstract public function build();
+
+    /**
+     * @return string :sql string with ?
+     */
+    public function sqlStr() {
+        if(!$this->sqlString) {
+            throw new Exception\SqlException("sql must build before use");
+        }
+        return $this->sqlString;
+    }
 
     public function setTableName($tableName) {
         $this->tableName = $tableName;
@@ -17,17 +32,15 @@ abstract class Sql {
         return $this->tableName;
     }
 
-    abstract public function build();
-
     /**
      * @return array :array($value...)
      */
-    abstract public function binds();
-
-    /**
-     * @return string :sql string with ?
-     */
-    abstract public function sqlStr();
+    public function binds() {
+        if($this->bindValues===null) {
+            throw new Exception\SqlException("sql must build before use");
+        }
+        return $this->bindValues;
+    }
 
     /**
      * @return string :sql after replace ? to $value
