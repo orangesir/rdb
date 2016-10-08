@@ -68,7 +68,7 @@ class SelectSql extends Sql {
         $whereStr = "";
         if($where = $this->getWhere()) {
             $whereStr = $where->whereStr();
-            $this->bindValues = array_merge($this->bindValues, $where->binds())
+            $this->bindValues = array_merge($this->bindValues, $where->binds());
         }
 
         $orderStr = "";

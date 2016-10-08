@@ -3,7 +3,7 @@ namespace Rdb;
 
 class Config {
 
-    private static $configs;
+    private static $configs=array();
 
     /**
      * @configParam dsn:
@@ -34,6 +34,10 @@ class Config {
             throw new Exception\ConfigException("dbconfig:{$dbname} unset!");
         }
         return self::$configs[$dbname];
+    }
+
+    public static function clean() {
+        self::$configs = array();
     }
 
 }
