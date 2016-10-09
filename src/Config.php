@@ -15,7 +15,7 @@ class Config {
      */
     public static function set($dbname, array $config) {
         if(!is_string($dbname)) {
-            throw new Exception\ConfigException("dbname not a String!");
+            throw new Exception\ConfigException("dbname not a string!");
         }
         if(!isset($config["dsn"])) {
             throw new Exception\ConfigException("dbconfig:{$dbname} have not dsn(PDO dsn)!");
