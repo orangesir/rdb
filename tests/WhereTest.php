@@ -10,7 +10,7 @@ class WhereTest extends \TestCase {
         $binds = $where->binds();
         $this->assertEquals($binds, array(5, "test"));
         $whereStr = $where->whereStr();
-        $this->assertEquals($whereStr, " where cola=? AND colb>?");
+        $this->assertEquals($whereStr, " WHERE cola=? AND colb>?");
     }
 
 }

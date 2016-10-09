@@ -47,12 +47,17 @@ abstract class Sql {
      */
     public function __toString() {
         $binds = $this->binds();
-        foreach ($binds as $key => $value) {
-            if(is_string($value)) {
-                $binds[$key] = "'".$value."'";
-            }
+        $sql = $this->sqlStr();
+        $sqlFragments = explode("?", $sql);
+
+        $countBind = count($binds);
+        $countSqlFragMents = count($sqlFragments);
+        $sqlString = $sqlFragments[0];
+        for ($i=1; $i < $countSqlFragMents; $i++) { 
+            $ichar = isset($binds[$i-1]) ? (is_string($binds[$i-1]) ? "'".$binds[$i-1]."'" : $binds[$i-1]) : "?";
+            $sqlString .= $ichar .$sqlFragments[$i];
         }
-        return str_replace(array_pad(array(), count($binds), "?"), $binds, $sthis->sqlStr);
+        return $sqlString;
     }
 
     public function setWhere(Where $where) {

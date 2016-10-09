@@ -8,7 +8,7 @@ class Where {
 
     public function bind($whereStr, $value=null) {
         $this->whereStrs[] = $whereStr;
-        if($value) {
+        if($value!==null) {
             $this->binds[] = $value;
         }
         return $this;
@@ -19,7 +19,7 @@ class Where {
     }
 
     public function whereStr() {
-        return $this->whereStrs ? " where ".implode(" AND ", $this->whereStrs):"";
+        return $this->whereStrs ? " WHERE ".implode(" AND ", $this->whereStrs):"";
     }
 
 }
