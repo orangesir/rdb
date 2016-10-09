@@ -62,4 +62,17 @@ class ConfigTest extends \TestCase {
             );
         \Rdb\Config::set("dbname", $config);
     }
+
+    public function testOkSetGet() {
+        $dbname = "dbname";
+        \Rdb\Config::clean();
+        $config = array(
+            "dsn" => "mysql:host=127.0.0.1;port=3306;dbname=testDb;charset=utf-8",
+            "username" => "username",
+            "password" => "password"
+            );
+        \Rdb\Config::set($dbname, $config);
+        $dbconfig = \Rdb\Config::get($dbname);
+        $this->assertEquals($dbconfig, $config);
+    }
 }
