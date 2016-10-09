@@ -7,6 +7,9 @@ class Where {
     private $binds = array();
 
     public function bind($whereStr, $value=null) {
+        if(!$whereStr) {
+            throw new Exception\SqlException("Where bind whereStr can not null");
+        }
         $this->whereStrs[] = $whereStr;
         if($value!==null) {
             $this->binds[] = $value;
