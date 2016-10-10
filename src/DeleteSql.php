@@ -15,5 +15,6 @@ class DeleteSql extends Sql {
 
         $this->sqlString = "DELETE FROM `".$this->getTableName()."`".$this->getWhere()->whereStr();
         $this->bindValues = $this->getWhere()->binds();
+        return $this;
     }
 }

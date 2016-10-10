@@ -11,16 +11,19 @@ class Connection {
 	private $name;
 	private $statements;
 	private $lastStatement;
+	private $config;
 	
 	public function __construct($dbname) {
 		$this->name = $dbname;
 
 		$config = Config::get($dbname);
+
 		$pdo = new \PDO($config["dsn"], $config["username"], $config["password"]);
 		$pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 		$pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES,true);
 
 		$this->pdo = $pdo;
+		$this->config = $config;
 	}
 
 	/**
@@ -117,6 +120,10 @@ class Connection {
 			$this->statements[$sqlStr] = $this->pdo->prepare($sqlStr);
 		}
 		return $this->statements[$sqlStr];
+	}
+
+	public function __toString() {
+		return $this->config["dsn"]."<|>".$this->config["username"]."<|>".$this->config["password"];
 	}
 
 }

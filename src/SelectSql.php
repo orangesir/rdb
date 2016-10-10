@@ -8,15 +8,17 @@ class SelectSql extends Sql {
     protected $limit;
     protected $orders = array();
 
-    public function appendFields(array $fields) {
+    public function addFields(array $fields) {
         foreach ($fields as $field) {
-            Sql::checkField($field);
-            $this->fields[] = $field;
+            $this->addField($field);
         }
+        return $this;
     }
 
-    public function appendField($field) {
+    public function addField($field) {
+        Sql::checkField($field);
         $this->fields[] = $field;
+        return $this;
     }
 
     public function getFields() {
@@ -25,12 +27,14 @@ class SelectSql extends Sql {
 
     public function ascField($field) {
         Sql::checkField($field);
-        $this->orders[] = "`".$field."` asc";
+        $this->orders[] = "`".$field."` ASC";
+        return $this;
     }
 
     public function descField($field) {
         Sql::checkField($field);
-        $this->orders[] = "`".$field."` desc";
+        $this->orders[] = "`".$field."` DESC";
+        return $this;
     }
 
     public function getOrders() {
@@ -39,10 +43,12 @@ class SelectSql extends Sql {
 
     public function setOffset($offset) {
         $this->offset = $offset;
+        return $this;
     }
 
     public function setLimit($limit) {
         $this->limit = $limit;
+        return $this;
     }
 
     public function getOffset() {
@@ -74,7 +80,7 @@ class SelectSql extends Sql {
 
         $orderStr = "";
         if($this->getOrders()) {
-            $orderStr = " order by ".implode(",", $this->getOrders());
+            $orderStr = " ORDER BY ".implode(",", $this->getOrders());
         }
 
         $limitStr = "";
@@ -86,7 +92,7 @@ class SelectSql extends Sql {
             }
             $limitParams[] = "?";
             $this->bindValues[] = $this->getLimit();
-            $limitStr = " limit ".implode(",", $limitParams);
+            $limitStr = " LIMIT ".implode(",", $limitParams);
         }
         $this->sqlString = "SELECT ".$fieldstr." FROM `".$this->getTableName()."`".$whereStr.$orderStr.$limitStr;
         return $this;
