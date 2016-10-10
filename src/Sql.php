@@ -26,6 +26,7 @@ abstract class Sql {
 
     public function setTableName($tableName) {
         $this->tableName = $tableName;
+        return $this;
     }
 
     public function getTableName() {
