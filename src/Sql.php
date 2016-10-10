@@ -63,6 +63,7 @@ class Sql {
 
     public function setWhere(Where $where) {
         $this->where = $where;
+        return $this;
     }
 
     public function getWhere() {

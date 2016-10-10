@@ -8,7 +8,7 @@ class UpdateSql extends Sql {
     public function set($field, $value) {
         Sql::checkField($field);
         Sql::checkValue($value);
-        $this->setValues[$field] = $value;
+        $this->sets[$field] = $value;
         return $this;
     }
 
@@ -23,11 +23,11 @@ class UpdateSql extends Sql {
         }
 
         if(!$this->getSets()) {
-            throw new Exception\SqlException("update set values not set");
+            throw new Exception\SqlException("update sql no set");
         }
 
         if(!$this->getWhere()) {
-            throw new Exception\SqlException("update no set where");
+            throw new Exception\SqlException("update sql no where");
         }
 
         $setStrs = array();
@@ -38,7 +38,7 @@ class UpdateSql extends Sql {
         $setStr = " SET ".implode(",", $setStrs);
         
         $whereStr = $this->getWhere()->whereStr();
-        $this->bindValues = array_merge($this->bindValues, $this->getWher()->binds());
+        $this->bindValues = array_merge($this->bindValues, $this->getWhere()->binds());
 
         $this->sqlString = "UPDATE `".$this->getTableName()."`".$setStr.$whereStr;
         return $this;
