@@ -1,7 +1,7 @@
 <?php
 use \Rdb\InsertSql;
 
-class InsertTest extends \TestCase {
+class InsertSqlTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
