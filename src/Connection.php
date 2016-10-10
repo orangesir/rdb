@@ -36,7 +36,7 @@ class Connection {
 		$statement->closeCursor();
 		$this->lastStatement = $statement;
 		$result = $statement->execute($sql->binds());
-		if($throwException) {
+		if(!$result && $throwException) {
 			throw new Exception\DbException($sql->__toString()." : execute failure!");
 		}
 		return $result;
@@ -73,23 +73,23 @@ class Connection {
 	 *      $colValue 查询结果中对应的$colName列的值
 	 *      参数$colName不传时，查询结果数组键值为0,1,2...
 	 */
-	public function getRows(SelectSql $sql, $colName=null) {
+	public function getRows(Sql $sql, $colName=null) {
 		$this->execute($sql);
 		$rows = $this->lastStatement->fetchAll(\PDO::FETCH_ASSOC);
 		if($colName) {
-			if(!$sql->hasCol($colName)) {
-				throw new Exception\DbException($sql->getTableName()." col {$colName} notExist!");
-			}
 			$filterRows = array();
 			foreach ($rows as $row) {
-				$filterRows[$row[$key]] = $row;
+				if(!isset($row[$colName])) {
+					throw new Exception\DbException($sql->getTableName()." col {$colName} notExist!");
+				}
+				$filterRows[$row[$colName]] = $row;
 			}
 			$rows = $filterRows;
 		}
 		return $rows;
 	}
 
-	public function getRow(SelectSql $sql) {
+	public function getRow(Sql $sql) {
 		$sql->setLimit(1);
 		$this->execute($sql);
 		$row = $this->lastStatement->fetch(\PDO::FETCH_ASSOC);
@@ -99,7 +99,7 @@ class Connection {
 	/**
 	 * 获取列组成list返回
 	 */
-	public function getList(SelectSql $sql) {
+	public function getList(Sql $sql) {
 		$this->execute($sql);
 		return $this->lastStatement->fetchAll(\PDO::FETCH_COLUMN);
 	}
@@ -107,7 +107,7 @@ class Connection {
 	/**
 	 * 查询所有第一行的第一个字段
 	 */
-	public function getOne(SelectSql $sql) {
+	public function getOne(Sql $sql) {
 		$sql->setLimit(1);
 		$this->execute($sql);
 		$row = $this->lastStatement->fetch(\PDO::FETCH_NUM);
