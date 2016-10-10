@@ -5,26 +5,10 @@ class UpdateSql extends Sql {
 
     protected $sets = array();
 
-    public function set($filed, $value) {
-        if(!$filed) {
-            throw new Exception\SqlException("update set filed is null or null string");
-        }
-        if(!is_string($filed)) {
-            throw new Exception\SqlException("update set filed is not a string");
-        }
-        if($value===null) {
-            throw new Exception\SqlException("update set value is null");
-        }
-        if(is_object($value)) {
-            throw new Exception\SqlException("update set value is a object");
-        }
-        if(is_array($value)) {
-            throw new Exception\SqlException("update set value is a array");
-        }
-        if(is_bool($value)) {
-            throw new Exception\SqlException("update set value is a bool");
-        }
-        $this->setValues[$filed] = $value;
+    public function set($field, $value) {
+        Sql::checkField($field);
+        Sql::checkValue($value);
+        $this->setValues[$field] = $value;
         return $this;
     }
 
@@ -47,8 +31,8 @@ class UpdateSql extends Sql {
         }
 
         $setStrs = array();
-        foreach ($this->getSets() as $filed => $value) {
-            $setStrs[] = "`".$filed."`=?";
+        foreach ($this->getSets() as $field => $value) {
+            $setStrs[] = "`".$field."`=?";
             $this->bindValues[] = $value;
         }
         $setStr = " SET ".implode(",", $setStrs);

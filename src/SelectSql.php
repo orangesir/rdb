@@ -3,33 +3,32 @@ namespace Rdb;
 
 class SelectSql extends Sql {
 
-    protected $fileds = array();
+    protected $fields = array();
     protected $offset;
     protected $limit;
     protected $orders = array();
 
-    public function setFileds(array $fileds) {
-        $this->fileds = $fileds;
+    public function appendFields(array $fields) {
+        foreach ($fields as $field) {
+            Sql::checkField($field);
+            $this->fields[] = $field;
+        }
     }
 
-    public function appendFiled($filed) {
-        $this->fileds[] = $filed;
+    public function appendField($field) {
+        $this->fields[] = $field;
     }
 
-    public function appendFileds(array $fileds) {
-        $this->fileds = array_merge($this->fileds, $fileds);
+    public function getFields() {
+        return $this->fields;
     }
 
-    public function getFileds() {
-        return $this->fileds;
+    public function ascField($field) {
+        $this->orders[] = "`".$field."` asc";
     }
 
-    public function ascFiled($filed) {
-        $this->orders[] = "`".$filed."` asc";
-    }
-
-    public function descFiled($filed) {
-        $this->orders[] = "`".$filed."` desc";
+    public function descField($field) {
+        $this->orders[] = "`".$field."` desc";
     }
 
     public function getOrders() {
@@ -57,12 +56,12 @@ class SelectSql extends Sql {
         $this->bindValues = array();
 
         if(!$this->getTableName()) {
-            throw new Exception\SqlException("no table name");
+            throw new Exception\SqlException("select sql no table name");
         }
-        if($this->getFileds()) {
-            $filedStr = "`".implode("`,`", $this->getFileds())."`";
+        if($this->getFields()) {
+            $fieldstr = "`".implode("`,`", $this->getFields())."`";
         } else {
-            $filedStr = "*";
+            $fieldstr = "*";
         }
 
         $whereStr = "";
@@ -87,7 +86,7 @@ class SelectSql extends Sql {
             $this->bindValues[] = $this->getLimit();
             $limitStr = " limit ".implode(",", $limitParams);
         }
-        $this->sqlString = "SELECT ".$filedStr." FROM `".$this->getTableName()."`".$whereStr.$orderStr.$limitStr;
+        $this->sqlString = "SELECT ".$fieldstr." FROM `".$this->getTableName()."`".$whereStr.$orderStr.$limitStr;
         return $this;
     }
 

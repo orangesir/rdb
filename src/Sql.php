@@ -1,7 +1,7 @@
 <?php
 namespace Rdb;
 
-abstract class Sql {
+class Sql {
 
     protected $where;
     protected $sqlString = "";
@@ -12,7 +12,7 @@ abstract class Sql {
     /**
      * make sqlString and append bindValues
      */
-    abstract public function build();
+    public function build(){}
 
     /**
      * @return string :sql string with ?
@@ -67,5 +67,29 @@ abstract class Sql {
 
     public function getWhere() {
         return $this->where;
+    }
+
+    public static function checkField($field) {
+        if(!$field) {
+            throw new Exception\SqlException("sql field is null or null string");
+        }
+        if(!is_string($field)) {
+            throw new Exception\SqlException("sql field is not a string");
+        }
+    }
+
+    public static function checkValue($value) {
+        if($value===null) {
+            throw new Exception\SqlException("sql value is null");
+        }
+        if(is_object($value)) {
+            throw new Exception\SqlException("sql value is a object");
+        }
+        if(is_array($value)) {
+            throw new Exception\SqlException("sql value is a array");
+        }
+        if(is_bool($value)) {
+            throw new Exception\SqlException("sql value is a bool");
+        }
     }
 }

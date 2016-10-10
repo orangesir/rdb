@@ -12,6 +12,7 @@ class Where {
         }
         $this->whereStrs[] = $whereStr;
         if($value!==null) {
+            Sql::checkValue($value);
             $this->binds[] = $value;
         }
         return $this;

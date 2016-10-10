@@ -24,7 +24,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set filed is null or null string
+     * @expectedExceptionMessage sql field is null or null string
      */
     public function testSetFiledNull() {
         $insertSql = new InsertSql();
@@ -33,7 +33,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set filed is null or null string
+     * @expectedExceptionMessage sql field is null or null string
      */
     public function testSetFiledNullString() {
         $insertSql = new InsertSql();
@@ -42,7 +42,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set filed is not a string
+     * @expectedExceptionMessage sql field is not a string
      */
     public function testSetFiledNotString() {
         $insertSql = new InsertSql();
@@ -51,7 +51,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set value is null
+     * @expectedExceptionMessage sql value is null
      */
     public function testSetValueNull() {
         $insertSql = new InsertSql();
@@ -65,7 +65,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set value is a object
+     * @expectedExceptionMessage sql value is a object
      */
     public function testSetValueObject() {
         $insertSql = new InsertSql();
@@ -74,7 +74,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set value is a array
+     * @expectedExceptionMessage sql value is a array
      */
     public function testSetValueArray() {
         $insertSql = new InsertSql();
@@ -83,7 +83,7 @@ class InsertTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage insert set value is a bool
+     * @expectedExceptionMessage sql value is a bool
      */
     public function testSetValueBool() {
         $insertSql = new InsertSql();
