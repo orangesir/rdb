@@ -6,7 +6,7 @@ class DeleteSqlTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage update sql no table name
+     * @expectedExceptionMessage delete sql no table name
      */
     public function testNoTableName() {
         $deleteSql = new DeleteSql();
@@ -15,7 +15,7 @@ class DeleteSqlTest extends \TestCase {
 
     /**
      * @expectedException \Rdb\Exception\SqlException
-     * @expectedExceptionMessage update sql no set where
+     * @expectedExceptionMessage delete sql no set where
      */
     public function testNoWhere() {
         $deleteSql = new DeleteSql();
