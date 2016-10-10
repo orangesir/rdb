@@ -24,10 +24,12 @@ class SelectSql extends Sql {
     }
 
     public function ascField($field) {
+        Sql::checkField($field);
         $this->orders[] = "`".$field."` asc";
     }
 
     public function descField($field) {
+        Sql::checkField($field);
         $this->orders[] = "`".$field."` desc";
     }
 
