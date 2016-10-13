@@ -123,7 +123,7 @@ class Connection {
 	}
 
 	public function __toString() {
-		return $this->config["dsn"]."<|>".$this->config["username"]."<|>".$this->config["password"];
+		return "db ".$this->name.": ".$this->config["dsn"]."<|>".$this->config["username"]."<|>".$this->config["password"];
 	}
 
 }
