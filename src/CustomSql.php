@@ -11,13 +11,13 @@ class CustomSql extends Sql {
             throw new Exception\SqlException("custom sql sqlstr is null or null string");
         }
         if(!is_string($sqlStr)) {
-            throw new Exception\SqlException("custom sql is not a string");
+            throw new Exception\SqlException("custom sql sqlstr is not a string");
         }
         $this->customSqlStr = $sqlStr;
         $this->customValues = array();
         if($values!==null) {
             if(!is_array($values)) {
-                throw new Exception\SqlException("custom sql is not a array");
+                throw new Exception\SqlException("custom sql values is not a array");
             }
             foreach ($values as $value) {
                 Sql::checkValue($value);
@@ -29,7 +29,7 @@ class CustomSql extends Sql {
 
     public function build() {
         if($this->customSqlStr===null) {
-            throw new Exception\SqlException("custom sql is not set");
+            throw new Exception\SqlException("custom sql have not set sqlstr");
         }
         $this->sqlString = $this->customSqlStr;
         $this->bindValues = $this->customValues;
