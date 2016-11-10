@@ -35,7 +35,15 @@ class Connection {
 		$statement = $this->getStatement($sql);
 		$statement->closeCursor();
 		$this->lastStatement = $statement;
-		$result = $statement->execute($sql->binds());
+		foreach($sql->binds() as $key => $value) {
+			if(is_numeric($value)) {
+				// php pdo 处理 limit语句时绑定参数有bug,只能使用这种方式
+				$statement->bindValue($key+1, $value, \PDO::PARAM_INT);
+			} else {
+				$statement->bindValue($key+1, $value);
+			}
+		}
+		$result = $statement->execute();
 		if(!$result && $throwException) {
 			throw new Exception\DbException($sql->__toString()." : execute failure!");
 		}
