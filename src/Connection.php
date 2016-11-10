@@ -116,7 +116,9 @@ class Connection {
 	 * 查询所有第一行的第一个字段
 	 */
 	public function getOne(Sql $sql) {
-		$sql->setLimit(1);
+		if(method_exists($sql, "setLimit")) {
+			$sql->setLimit(1);
+		}
 		$this->execute($sql);
 		$row = $this->lastStatement->fetch(\PDO::FETCH_NUM);
 		return $row ? $row[0] : null;
