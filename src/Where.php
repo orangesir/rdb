@@ -7,9 +7,6 @@ class Where {
     private $binds = array();
 
     public function in($field, $values) {
-        if(!$values) {
-            return;
-        }
         $wens = array();
         foreach ($values as $value) {
             $wens[] = "?";
