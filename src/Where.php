@@ -13,6 +13,7 @@ class Where {
         }
         $whereStr = "`".$field."` IN(".implode(",", $wens).")";
         $this->bind($whereStr, $values);
+        return $this;
     }
 
     public function bind($whereStr, $value=null) {
