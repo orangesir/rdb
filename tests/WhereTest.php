@@ -31,4 +31,11 @@ class WhereTest extends \TestCase {
         $where->bind(null);
     }
 
+    public function testIn() {
+        $where = new Where();
+        $where->in("cola", array(1,2,3,4));
+        $this->assertEquals($where->binds(), array(1,2,3,4));
+        $this->assertEquals($where->whereStr(), " WHERE `cola` IN(?,?,?,?)");
+    }
+
 }
