@@ -12,8 +12,15 @@ class Where {
         }
         $this->whereStrs[] = $whereStr;
         if($value!==null) {
-            Sql::checkValue($value);
-            $this->binds[] = $value;
+            if(is_array($value)) {
+                foreach ($value as $item) {
+                    Sql::checkValue($value);
+                    $this->binds[] = $value;
+                }
+            } else {
+                Sql::checkValue($value);
+                $this->binds[] = $value;
+            }
         }
         return $this;
     }
