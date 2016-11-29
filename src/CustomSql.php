@@ -33,5 +33,6 @@ class CustomSql extends Sql {
         }
         $this->sqlString = $this->customSqlStr;
         $this->bindValues = $this->customValues;
+        return $this;
     }
 }
